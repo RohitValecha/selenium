@@ -1,18 +1,23 @@
 package pages;
 
-import org.CommonFunctions;
-import org.openqa.selenium.By;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class ConfirmOrder extends CommonFunctions
-{
+public class ConfirmOrder extends CommonFunctions {
+    //OR
+    @FindBy(xpath = "//button[contains (@class,'medium') and @type ='submit']")
+    WebElement confirmOrder;
 
-            public static WebElement confirmOrder=driver.findElement(By.xpath("//button[contains (@class,'medium') and @type ='submit']"));
+    //Initialization
+    public  ConfirmOrder(){
+        PageFactory.initElements(driver,this);
+    }
 
+    //Actions
     public ConfirmOrder confirmOrder(){
-
-        waitUntilElementAppears(confirmOrder);
-        confirmOrder.click();
+        clickAfterElementAppears(confirmOrder);
         return this;
     }
 }

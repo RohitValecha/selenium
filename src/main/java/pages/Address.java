@@ -1,16 +1,25 @@
 package pages;
 
-import org.CommonFunctions;
-import org.openqa.selenium.By;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class Address extends CommonFunctions {
 
-    public static WebElement checkoutBtn=driver.findElement(By.xpath("//button[@type='submit' and @name='processAddress']"));
 
+    //OR
+    @FindBy(xpath = "//button[@type='submit' and @name='processAddress']")
+    WebElement checkoutBtn;
+
+    //Initialization
+    public  Address(){
+        PageFactory.initElements(driver,this);
+    }
+
+    //Actions
     public ShippingAddress checkOutAddress(){
-        waitUntilElementAppears(checkoutBtn);
-        checkoutBtn.click();
+        clickAfterElementAppears(checkoutBtn);
         return new ShippingAddress();
     }
 }

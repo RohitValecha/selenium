@@ -1,48 +1,44 @@
 package pages;
 
-import org.BaseClass;
-import org.CommonFunctions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class HomePage extends CommonFunctions {
-    public static  WebElement signInBtn = driver.findElement(By.className("login"));
-//    public static List<WebElement> productDetails = driver.findElements(By.className("product-container"));
-//    public static  WebElement product= driver.findElement(By.xpath("//*[@id=\"homefeatured\"]/li[1]/div/div[1]/div/a[1]/img"));
+    //OR
+    @FindBy(className = "login")
+    WebElement signInbtn;
 
-    public HomePage(WebDriver driver) {
+    @FindBy(id = "search_query_top")
+    WebElement search;
 
+    @FindBy(xpath = "//button[@type='submit' and @name='submit_search']")
+    WebElement searchBtn;
+
+    //Initialization
+    public  HomePage(){
+        PageFactory.initElements(driver,this);
     }
 
-    public Login clickSignIn()
-    {
-        waitUntilElementAppears(signInBtn);
-        signInBtn.click();
-        Login log= new Login(driver);
-        WebElement EL = log.getEmailId();
-        Assert.assertTrue(EL.isDisplayed());
-        return new Login(driver);
+    //Actions
+    public Login clickSignIn(){
+        clickAfterElementAppears(signInbtn);
+        return new Login();
     }
 
 
-    public ProductDetails navigateToProductDetails() {
+    public ProductDetails navigateToProduct(String productName){
 
-//        WebDriverWait wait = new WebDriverWait(driver,20);
-        try{
-            WebElement product= driver.findElement(By.xpath("//a[@title='Faded Short Sleeve T-shirts'][@itemprop='url'][@class='product-name']"));
-            product.click();
-        }
-        catch (org.openqa.selenium.StaleElementReferenceException ex){
-            WebElement product= driver.findElement(By.xpath("//a[@title='Faded Short Sleeve T-shirts'][@itemprop='url'][@class='product-name']" +
-                    ""));
-            product.click();
-        }
-        return new ProductDetails(driver);
+        clickProduct(productName);
+        return new ProductDetails();
+    }
+
+    public SearchPage searchProduct(String searchString){
+        search.sendKeys(searchString);
+        clickAfterElementAppears(searchBtn);
+//        waitUntilElementAppears(getProduct(productName));
+        return new SearchPage(driver);
     }
 }

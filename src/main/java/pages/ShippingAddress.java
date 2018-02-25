@@ -1,19 +1,28 @@
 package pages;
 
-import org.CommonFunctions;
-import org.openqa.selenium.By;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class ShippingAddress extends CommonFunctions{
+public class ShippingAddress extends CommonFunctions {
 
-    public static WebElement checkoutBtn=driver.findElement(By.xpath("//button[@type='submit' and @name='processCarrier']"));
-    public static WebElement checkBox=driver.findElement(By.id("uniform-cgv"));
+    //OR
+    @FindBy(xpath = "//button[@type='submit' and @name='processCarrier']")
+    WebElement checkoutBtn;
 
+    @FindBy(id = "uniform-cgv")
+    WebElement checkBox;
 
+    //Initialization
+    public  ShippingAddress(){
+        PageFactory.initElements(driver,this);
+    }
+
+    //Actions
     public Payment checkOutShipping(){
-        checkBox.click();
-        waitUntilElementAppears(checkoutBtn);
-        checkoutBtn.click();
+        clickAfterElementAppears(checkBox);
+        clickAfterElementAppears(checkoutBtn);
         return new Payment();
     }
 }

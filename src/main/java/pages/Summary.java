@@ -1,16 +1,24 @@
 package pages;
 
-import org.CommonFunctions;
-import org.openqa.selenium.By;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class Summary extends CommonFunctions {
 
-    public static WebElement checkoutBtn=driver.findElement(By.xpath("//a[contains(@href,'step=1')][@title='Proceed to checkout']"));
+    //OR
+    @FindBy(xpath = "//a[contains(@href,'step=1')][@title='Proceed to checkout']")
+    WebElement checkOutBtn;
 
-    public Address checkOutSummary(){
-        waitUntilElementAppears(checkoutBtn);
-        checkoutBtn.click();
+    //Initialization
+    public Summary() {
+        PageFactory.initElements(driver, this);
+    }
+
+    //Actions
+    public Address checkOutSummary() {
+        clickAfterElementAppears(checkOutBtn);
         return new Address();
     }
 }

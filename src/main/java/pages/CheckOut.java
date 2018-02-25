@@ -1,23 +1,25 @@
 package pages;
 
-import org.CommonFunctions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import utils.CommonFunctions;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 
 public class CheckOut extends CommonFunctions {
 
-    public static WebElement checkoutBtn=driver.findElement(By.xpath("//a[@title='Proceed to checkout']"));
+    //OR
+    @FindBy(xpath = "//a[@title='Proceed to checkout']")
+    WebElement checkoutBtn;
 
-    public CheckOut(WebDriver driver) {
-        this.driver=driver;
+    //Initialization
+    public  CheckOut(){
+        PageFactory.initElements(driver,this);
     }
 
-
-    public Summary checkout() {
-        waitUntilElementAppears(checkoutBtn);
-        checkoutBtn.click();
+    //Actions
+    public Summary checkout(){
+        clickAfterElementAppears(checkoutBtn);
         return new Summary();
     }
-
 }
