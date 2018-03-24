@@ -1,10 +1,7 @@
 package utils;
 
 import base.BaseClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,6 +38,7 @@ public class CommonFunctions extends BaseClass {
 
     public void clickProduct(String productName){
         WebElement productElement = driver.findElement(By.xpath("//a[@title='"+productName+"'][@itemprop='url'][@class='product-name']"));
+//        clickViaJS(productElement,driver);
         for (int i=0;i<=4;i++) {
             try {
                 productElement.click();
@@ -69,11 +67,12 @@ public class CommonFunctions extends BaseClass {
 //        wait.until(ExpectedConditions.stalenessOf(Element));
     }
 
-    public void scrollToElement (WebElement Element)
+    public void clickViaJS (WebElement Element, WebDriver driver)
     {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(Element).perform();
+        JavascriptExecutor js = ((JavascriptExecutor) driver);
+        js.executeScript("arguments[0].click();",Element);
     }
+
 
     public void hover (WebElement Element){
         Actions actions = new Actions(driver);
